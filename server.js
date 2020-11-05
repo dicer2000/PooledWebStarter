@@ -2,15 +2,13 @@
 var express = require('express');
 var app = express();
 const request = require('request');
-const sql = require('mssql');
+const router = express.Router()
 const bodyParser = require('body-parser');
-//const routes = require( "./routes" );
 
-// Set the View Engine
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(bodyParser.raw());
+// Import in the sql libraries
+const { sql,poolPromise } = require('./DB/dbPool')
+
+//const routes = require( "./routes" );
 
 // Set up the server
 // process.env.PORT is related to deploying on AWS
@@ -18,12 +16,17 @@ var server = app.listen(process.env.PORT || 5000, listen);
 module.exports = server;
 path = require('path');
 
+//app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
+
+// Inject your routes in here
 
 
+// End routes
 
-
-// ***********************************************
-// Be sure any routes are setup before this!
 // Set the folder for public items
 publicDir = path.join(__dirname,'public');
 app.use(express.static(publicDir))
